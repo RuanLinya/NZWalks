@@ -1,0 +1,33 @@
+# Build results
+bin/
+obj/
+out/
+
+# Visual Studio
+.vs/
+.vscode/
+*.user
+*.suo
+
+# ASP.NET Core environment settings
+appsettings.Development.json
+appsettings.*.json
+
+# Logs
+*.log
+logs/
+
+# EF Core
+*Migrations/
+
+# Publish output
+wwwroot/
+
+# Rider / JetBrains
+.idea/
+*.iml
+
+# Others
+*.db
+*.cache
+*.tmp
