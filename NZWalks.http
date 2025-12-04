@@ -1,0 +1,6 @@
+@WebAPILernen_HostAddress = http://localhost:5115
+
+GET {{NZWalk_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
