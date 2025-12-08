@@ -34,5 +34,12 @@ namespace NZWalks.API.Controllers
             // Save to database
 
         }
-    }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var walksDomainModel = await walkRepository.GetAllAsync();   
+            return Ok(mapper.Map<List<WalkDto>>(walksDomainModel));
+        }
+     }
 }
