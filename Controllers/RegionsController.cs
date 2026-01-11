@@ -5,13 +5,14 @@ using NZWalks.API.Models.DTO;
 using NZWalks.API.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using NZWalks.API.CustomActionFilters;
 
 
 namespace NZWalks.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+
     public class RegionsController : ControllerBase
     {
         private readonly NZWalksDbContext dbContext;
@@ -24,7 +25,10 @@ namespace NZWalks.API.Controllers
             this.regionRepository = regionRepository;
             this.mapper = mapper;
         }
+
+        // Get api/regions
         [HttpGet]
+        [Authorize(Roles = "Reader")]
 
         public async Task<IActionResult> GetAll()
         {
@@ -37,8 +41,10 @@ namespace NZWalks.API.Controllers
             return Ok(mapper.Map<List<RegionDto>>(regionsDomain));
         }
 
+        // Get api/regions/{id}
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader")]
 
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
@@ -52,8 +58,13 @@ namespace NZWalks.API.Controllers
 
             return Ok(mapper.Map<RegionDto>(regionDomain));
         }
-       
+
+
+        // Post To Create new Region
         [HttpPost]
+        [ValidateModel]
+        [Authorize(Roles = "Writer")]
+
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
 
@@ -74,8 +85,11 @@ namespace NZWalks.API.Controllers
               
         }
 
+        //Update Region
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             //Get region from database
@@ -93,8 +107,11 @@ namespace NZWalks.API.Controllers
             return Ok(mapper.Map<RegionDto>(regionDomainModel));
         }
 
+        // Delete Region
+
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
 
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
