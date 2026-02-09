@@ -17,11 +17,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 var logger = new LoggerConfiguration()
     .WriteTo.Console()
+    .WriteTo.File("Logs/nzwalksapi-.log", rollingInterval: RollingInterval.Day)
     .MinimumLevel.Information()
     .CreateLogger();
 
 builder.Logging.ClearProviders();
-builder.Logging.AddSerilog(logger);
+builder.Logging.AddSerilog(logger); 
 
 
 builder.Services.AddControllers();
